@@ -11,7 +11,6 @@ if(windowHeight > windowWidth) {
 const canvasSize = windowWidth > 800 ? 0.7 : 0.95;
     canvas.width = windowWidth * canvasSize;
     canvas.height= windowHeight * canvasSize;
-    console.log(canvasSize);
 
 let score = 0;
 let gameFrame = 0;
