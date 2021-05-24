@@ -3,11 +3,15 @@ const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 let windowWidth = window.innerWidth;
 let windowHeight = window.innerHeight;
+
+
 if(windowHeight > windowWidth) {
     windowHeight = windowWidth;
 }
-    canvas.width = windowWidth * 0.9;
-    canvas.height= windowHeight * 0.9;
+const canvasSize = windowWidth > 800 ? 0.7 : 0.95;
+    canvas.width = windowWidth * canvasSize;
+    canvas.height= windowHeight * canvasSize;
+    console.log(canvasSize);
 
 let score = 0;
 let gameFrame = 0;
