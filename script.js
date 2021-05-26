@@ -8,6 +8,7 @@ const adjustRadius = windowWidth < 600 ? 3 : 1;
 if(windowHeight > windowWidth) {
     windowHeight = windowWidth;
 }
+console.log(adjustRadius);
 const canvasSize = windowWidth > 800 ? 0.7 : 0.95;
     canvas.width = windowWidth * canvasSize;
     canvas.height= windowHeight * canvasSize;
