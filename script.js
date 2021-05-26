@@ -4,7 +4,7 @@ const ctx = canvas.getContext('2d');
 let windowWidth = window.innerWidth;
 let windowHeight = window.innerHeight;
 
-
+const adjustRadius = windowWidth < 600 ? 3 : 1; 
 if(windowHeight > windowWidth) {
     windowHeight = windowWidth;
 }
@@ -14,7 +14,7 @@ const canvasSize = windowWidth > 800 ? 0.7 : 0.95;
 
 let score = 0;
 let gameFrame = 0;
-ctx.font = '50px Georgia';
+ctx.font = `${50/adjustRadius}px Georgia`;
 let gameSpeed = 1;
 let gameOver = false;
 
@@ -45,7 +45,7 @@ class Player {
     constructor(){
         this.x = canvas.width; //player starts at this point and goes toward the mouse position(in the center)
         this.y = canvas.height /2;
-        this.radius = 50; //to make a circle for player character
+        this.radius = 50 / adjustRadius; //to make a circle for player character
         this.angle = 0;  // to rotate the fish toward the mouse position 
         this.frameX = 0; //coordinates of currently displayed frame in fish spritesheet
         this.frameY = 0;
@@ -85,12 +85,11 @@ class Player {
             ctx.translate(this.x, this.y);
             ctx.rotate(this.angle);
             if(this.x >= mouse.x) {
-                ctx.drawImage(playerLeft, this.frameX * this.spriteWidth, this.frameY * this.sprithHeight, this.spriteWidth,this.sprithHeight, 0 - 60 , 0 - 50 , this.spriteWidth / 3.5, this.sprithHeight / 3.5);
+                ctx.drawImage(playerLeft, this.frameX * this.spriteWidth, this.frameY * this.sprithHeight, this.spriteWidth,this.sprithHeight, 0 - this.radius -10  , 0 - this.radius , this.spriteWidth / (3.3 * adjustRadius), this.sprithHeight / (3.3 * adjustRadius));
             }else{
-                ctx.drawImage(playerRight, this.frameX * this.spriteWidth, this.frameY * this.sprithHeight, this.spriteWidth,this.sprithHeight, 0  - 60 , 0 - 50 , this.spriteWidth / 3.5, this.sprithHeight / 3.5);
+                ctx.drawImage(playerRight, this.frameX * this.spriteWidth, this.frameY * this.sprithHeight, this.spriteWidth,this.sprithHeight, 0  - this.radius - 10 , 0 - this.radius , this.spriteWidth / (3.3 * adjustRadius), this.sprithHeight / (3.3 * adjustRadius));
             }
             ctx.restore();
-        
     }
 }
 const player = new Player;
@@ -103,7 +102,7 @@ class Bubble {
     constructor() {
         this.x = Math.random() * canvas.width;
         this.y = canvas.height + 100;
-        this.radius = 50;
+        this.radius = 50 / adjustRadius;
         this.speed = Math.random() * 5 + 1; //between 1 to 6 (can't be 0)
         this.distance; //keep track of each bubble and player
         this.counted = false; 
@@ -121,6 +120,7 @@ class Bubble {
 
     draw(){
         ctx.drawImage(bubbleImage,this.x-75, this.y-75, this.radius*3, this.radius*3);
+        
     }
 }
 
@@ -167,7 +167,7 @@ class Enemy {
     constructor(){
         this.x = canvas.width + 200;
         this.y = Math.random() * (canvas.height - 150 ) + 90;
-        this.radius = 60;
+        this.radius = 60 / adjustRadius;
         this.speed = Math.random() * 2 + 2;
         this.frame = 0;
         this.frameX = 0;
@@ -177,7 +177,8 @@ class Enemy {
     }
 
     draw(){
-        ctx.drawImage(enemyImage,this.frameX * this.spriteWidth, this.frameY * this.sprithHeight,this.spriteWidth, this.sprithHeight,this.x - 60, this.y - 70, this.spriteWidth / 3, this.sprithHeight / 3);
+        ctx.drawImage(enemyImage,this.frameX * this.spriteWidth, this.frameY * this.sprithHeight,this.spriteWidth, this.sprithHeight,this.x - this.radius, this.y - this.radius -5, this.spriteWidth / (3 * adjustRadius), this.sprithHeight / (3*adjustRadius));
+    
     }
 
     update(){
@@ -223,8 +224,8 @@ function handleEnemies(){
 
 function handleGameOver(){
     ctx.fillStyle= 'red';
-    ctx.fillText('GAME OVER !', canvas.width / 2 -150, canvas.height / 2 - 50);
-    ctx.strokeText('GAME OVER !', canvas.width / 2 - 150, canvas.height / 2 - 50);
+    ctx.fillText('GAME OVER !', canvas.width / 2 - (150 / adjustRadius), canvas.height / 2 );
+    ctx.strokeText('GAME OVER !', canvas.width / 2-(150 / adjustRadius) , canvas.height / 2 );
     gameOver = true;
 }
 
